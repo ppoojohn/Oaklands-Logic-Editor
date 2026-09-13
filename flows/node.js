@@ -536,7 +536,7 @@ export class BaseNode {
     }
 
     getTicks(seconds) {
-        return Math.floor(seconds * (1 / (this.editor?.flow?.updateSpeed || (1/60))))
+        return Math.floor(seconds * (1 / (this.editor?.simulationSpeed || (1/60))))
     }
 
     /* METHODS */

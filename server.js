@@ -18,6 +18,6 @@ app.use((req, res, next) => {
 app.use('/flows', express.static('flows'))
 app.use('/', express.static('./'))
 
-app.listen(process.env.PORT, () => {
-    console.log(`Listening on ${process.env.PORT}`)
+app.listen(process.env.PORT || 3000, () => {
+    console.log(`Listening on ${process.env.PORT || 3000}`)
 })

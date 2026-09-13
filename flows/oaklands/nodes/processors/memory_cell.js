@@ -39,7 +39,7 @@ export class Node extends BaseNode {
 
     update(updatedValue) {
         super.update()
-
+        console.log('memory_cell update called with:', updatedValue, 'right value:', this.getConnectionPointValue('#right'))
         const value = this.getConnectionPointValue(updatedValue)
         switch (updatedValue) {
             case "#left":

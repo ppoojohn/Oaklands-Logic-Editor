@@ -194,6 +194,14 @@
                 <h2>stream</h2>
                 <textarea id="file-name" rows="1" placeholder="Unnamed Flow" autocomplete="off" spellcheck="false"></textarea>
             </div>
+            </div>
+                    <li id="sim-speed-item" style="display: flex; align-items: center; gap: 6px; padding: 0 8px; color: white;">
+                        <span class="icon material-symbols-outlined">speed</span>
+                        <input type="range" id="sim-speed" min="1" max="240" step="1" value="60">
+                        <span id="sim-speed-label">60 tps</span>
+                    </li>
+            </div>
+
             <div id="buttons">
                 <button id="hamburger" class="button">
                     <span class="icon material-symbols-outlined">menu</span>
@@ -232,6 +240,10 @@
                         <span class="tooltip">Settings</span>
                     </button></li>
                     <li><button id="fullscreen" class="button">
+                        <span class="icon material-symbols-outlined">fullscreen</span>
+                        <span class="tooltip">Fullscreen</span>
+                    </button></li>
+                                        <li><button id="fullscreen" class="button">
                         <span class="icon material-symbols-outlined">fullscreen</span>
                         <span class="tooltip">Fullscreen</span>
                     </button></li>

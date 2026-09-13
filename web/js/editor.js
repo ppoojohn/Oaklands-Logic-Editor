@@ -38,6 +38,8 @@ class Editor {
         this.loading = false
         this.shouldResetContextEachFrame = false
         this.contextResetBenchmarkDone = false
+        this.simulationSpeed = 0.016666666 // 60 ticks per second
+        this.tickCount = 0
         
         requestAnimationFrame(() => this.benchmarkContextReset())
         requestAnimationFrame(this.loop)
@@ -86,21 +88,23 @@ class Editor {
         }
     }
 
-    async update(dt) {
-        if (this.loading) {
-            this.delta = 0
-            return
-        }
-        const millisecondsPerUpdate = (this.flow.updateSpeed || 1) * 1000
-        this.delta += Math.min(dt, 100)
+// editor.js, in the update(dt) method
+        async update(dt) {
+            if (this.loading) {
+                this.delta = 0
+                return
+            }
+            const millisecondsPerUpdate = (this.simulationSpeed || 1) * 1000  // <- changed
+            this.delta += Math.min(dt, 100)
 
         if (this.delta >= millisecondsPerUpdate)
             upprofiler.group('update')
 
         var updates = 0
-        while (this.delta >= millisecondsPerUpdate /*&& !(this.state.debug && context.editor.pause)*/) {
+        while (this.delta >= millisecondsPerUpdate) {
             upprofiler.group(`update ${updates}`)
             this.delta -= millisecondsPerUpdate
+            this.state.tickCount = (this.state.tickCount || 0) + 1   // <- changed
             this.main_flow.update(this.state)
             if (this.flow != this.main_flow)
                 this.flow.update(this.state) // for editing subflows, we need to make sure the nodes are working correctly :D
@@ -398,6 +402,15 @@ async function main() {
     window.editor = new Editor(
         document.querySelector('#chart')
     )
+
+    // tickrate slider
+    const slider = document.getElementById('sim-speed')
+    const label = document.getElementById('sim-speed-label')
+    slider.addEventListener('input', () => {
+        const tps = parseFloat(slider.value)
+        window.editor.simulationSpeed = 1 / tps
+        label.textContent = tps + ' tps'
+    })
 
     // handle params
     if (shareData != null) {

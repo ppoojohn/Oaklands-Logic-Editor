@@ -35,7 +35,8 @@ export class Node extends BaseNode {
 
 
     _calculate() {
-        const gated = (Date.now() / 1000) % (this.speed * 2) > this.speed ? true : false
+        const virtualSeconds = (this.editor?.tickCount || 0) / 60   // 60 = ticks/sec at normal speed
+        const gated = (virtualSeconds % (this.speed * 2)) > this.speed ? true : false
         if (gated)
             this.value = this.signal
         else
